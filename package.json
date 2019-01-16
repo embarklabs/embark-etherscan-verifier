@@ -1,0 +1,28 @@
+{
+  "name": "embark-flattener",
+  "version": "1.0.0",
+  "description": "Embark plugin to flatten solidity contracts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "solidity",
+    "solc",
+    "plugin",
+    "contracts",
+    "ethereum",
+    "embark"
+  ],
+  "author": "Jonathan Rainville",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/embark-framework/embark-flattener/issues"
+  },
+  "homepage": "https://github.com/embark-framework/embark-flattener#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  },
+  "dependencies": {
+  }
+}
