@@ -16,9 +16,9 @@ module.exports = (embark) => {
       const [, contractNames] = cmd.split(' ');
 
       if (contractNames) {
-        embark.logger.info('Going to flatten', contractNames);
+        embark.logger.info('Flattening ' + contractNames);
       } else {
-        embark.logger.info('Going to flatten all contracts');
+        embark.logger.info('Flattening all contracts');
       }
 
 
