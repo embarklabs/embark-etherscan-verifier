@@ -18,6 +18,13 @@ then add embark-flattener to the plugins section in `embark.json`:
   }
 ```
 
+## Usage
+
+In the console, type `flatten` or `flatten ContractName(s)`
+
+- `flatten`: Flattens all contracts
+- `flatten ContractName(s)`: Flattens the specified contract(s). For multiple contracts, separate them using a comma.
+
 ## Requirements
 
 - Embark 4.0.0 or higher
