@@ -8,7 +8,7 @@ module.exports = (embark) => {
   embark.registerConsoleCommand({
     description: "Flattens all or some of your contracts so that they can be verified on etherscan\n\t\tYou can specify which contract to flatten by using their filename (relative to the contract directory specified in embark.json). For multiple contracts, separate them using a comma",
     matches: (cmd) => {
-      const [commandName] = cmd.split(' '); // You can use `split` for commands that receive parameters
+      const [commandName] = cmd.split(' ');
       return commandName === 'flatten';
     },
     usage: "flatten or flatten <contracts>",
