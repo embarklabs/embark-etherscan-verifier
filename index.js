@@ -25,4 +25,18 @@ module.exports = (embark) => {
       flattener.flatten(contractNames, callback);
     }
   });
+
+  embark.registerConsoleCommand({
+    description: "Verifies a contract on Etherscan using you contract configuration. Requires an Etherscan API key. See: https://etherscancom.freshdesk.com/support/solutions/articles/35000022163-i-need-an-api-key",
+    matches: (cmd) => {
+      const [commandName] = cmd.split(' ');
+      return commandName === 'verify';
+    },
+    usage: "verify <apiKey> <contractName>",
+    process: (cmd, callback) => {
+      const [, apiKey, contractName] = cmd.split(' ');
+
+      flattener.verify(apiKey, contractName, callback);
+    }
+  });
 };
