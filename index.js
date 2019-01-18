@@ -26,8 +26,9 @@ module.exports = (embark) => {
     }
   });
 
+  const etherscanKeyDocsLink = 'https://etherscancom.freshdesk.com/support/solutions/articles/35000022163-i-need-an-api-key';
   embark.registerConsoleCommand({
-    description: "Verifies a contract on Etherscan using you contract configuration. Requires an Etherscan API key. See: https://etherscancom.freshdesk.com/support/solutions/articles/35000022163-i-need-an-api-key",
+    description: `Verifies a contract on Etherscan using you contract configuration. Requires an Etherscan API key. See: ${etherscanKeyDocsLink}`,
     matches: (cmd) => {
       const [commandName] = cmd.split(' ');
       return commandName === 'verify';
@@ -35,6 +36,16 @@ module.exports = (embark) => {
     usage: "verify <apiKey> <contractName>",
     process: (cmd, callback) => {
       const [, apiKey, contractName] = cmd.split(' ');
+
+      if (!apiKey || !contractName) {
+        embark.logger.error('Missing argument. Please provide your Etherscan API key and the contract name'.red);
+        embark.logger.error(`You can get an API key using this tutorial: ${etherscanKeyDocsLink}`.cyan);
+        return callback();
+      }
+
+      if (!embark.config.embarkConfig.versions.solc) {
+        return callback(null, 'solc version not present in embarkjs.json. Please add it to versions.solc'.red);
+      }
 
       flattener.verify(apiKey, contractName, callback);
     }
