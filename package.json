@@ -1,7 +1,7 @@
 {
-  "name": "embark-flattener",
-  "version": "1.0.0",
-  "description": "Embark plugin to flatten solidity contracts",
+  "name": "embark-etherscan-verifier",
+  "version": "4.0.0",
+  "description": "Embark plugin to flatten and verify  solidity contracts on Etherscan",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,14 +12,15 @@
     "plugin",
     "contracts",
     "ethereum",
-    "embark"
+    "embark",
+    "etherscan"
   ],
   "author": "Jonathan Rainville",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/embark-framework/embark-flattener/issues"
+    "url": "https://github.com/embark-framework/embark-etherscan-verifier/issues"
   },
-  "homepage": "https://github.com/embark-framework/embark-flattener#readme",
+  "homepage": "https://github.com/embark-framework/embark-etherscan-verifier#readme",
   "devDependencies": {
     "eslint": "^4.19.1"
   },

@@ -1,17 +1,17 @@
 /*global require, module*/
 
-const Flattener = require('./lib/Flattener');
+const FlattenerVerifier = require('./lib/FlattenerVerifier');
 
 module.exports = (embark) => {
-  const flattener = new Flattener(embark);
+  const flattenerVerifier = new FlattenerVerifier(embark);
 
   embark.registerConsoleCommand({
-    description: "Flattens all or some of your contracts so that they can be verified on etherscan\n\t\tYou can specify which contract to flatten by using their filename (relative to the contract directory specified in embark.json). For multiple contracts, separate them using a comma",
+    description: "Flattens all or some of your contracts so that they can be verified on Etherscan\n\t\tYou can specify which contract to flatten by using their contract name. For multiple contracts, separate them using a comma",
     matches: (cmd) => {
       const [commandName] = cmd.split(' ');
       return commandName === 'flatten';
     },
-    usage: "flatten or flatten <contracts>",
+    usage: "flatten or flatten [contracts]",
     process: (cmd, callback) => {
       const [, contractNames] = cmd.split(' ');
 
@@ -22,19 +22,18 @@ module.exports = (embark) => {
       }
 
 
-      flattener.flatten(contractNames, callback);
+      flattenerVerifier.flatten(contractNames, callback);
     }
   });
 
   const etherscanKeyDocsLink = 'https://etherscancom.freshdesk.com/support/solutions/articles/35000022163-i-need-an-api-key';
   embark.registerConsoleCommand({
-    description: `Verifies a contract on Etherscan using you contract configuration\n\t\tRequires an Etherscan API key.
-    See: ${etherscanKeyDocsLink}`,
+    description: `Verifies a contract on Etherscan using you contract configuration\n\t\tRequires an Etherscan API key.\n\t\tSee: ${etherscanKeyDocsLink}`,
     matches: (cmd) => {
       const [commandName] = cmd.split(' ');
       return commandName === 'verify';
     },
-    usage: "verify <apiKey> <contractName>]",
+    usage: "verify [apiKey] [contractName]",
     process: (cmd, callback) => {
       const [, apiKey, contractName] = cmd.split(' ');
 
@@ -48,7 +47,7 @@ module.exports = (embark) => {
         return callback(null, 'solc version not present in embarkjs.json. Please add it to versions.solc'.red);
       }
 
-      flattener.verify(apiKey, contractName, callback);
+      flattenerVerifier.verify(apiKey, contractName, callback);
     }
   });
 };
