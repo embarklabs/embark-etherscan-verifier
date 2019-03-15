@@ -1,9 +1,9 @@
 /*global require, module*/
 
-const Flattener = require('./lib/Flattener');
+const FlattenerVerifier = require('./lib/FlattenerVerifier');
 
 module.exports = (embark) => {
-  const flattener = new Flattener(embark);
+  const flattenerVerifier = new FlattenerVerifier(embark);
 
   embark.registerConsoleCommand({
     description: "Flattens all or some of your contracts so that they can be verified on etherscan\n\t\tYou can specify which contract to flatten by using their filename (relative to the contract directory specified in embark.json). For multiple contracts, separate them using a comma",
@@ -22,7 +22,7 @@ module.exports = (embark) => {
       }
 
 
-      flattener.flatten(contractNames, callback);
+      flattenerVerifier.flatten(contractNames, callback);
     }
   });
 
@@ -48,7 +48,7 @@ module.exports = (embark) => {
         return callback(null, 'solc version not present in embarkjs.json. Please add it to versions.solc'.red);
       }
 
-      flattener.verify(apiKey, contractName, callback);
+      flattenerVerifier.verify(apiKey, contractName, callback);
     }
   });
 };
