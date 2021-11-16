@@ -3,9 +3,32 @@
 const FlattenerVerifier = require('./lib/FlattenerVerifier');
 
 module.exports = (embark) => {
-  const flattenerVerifier = new FlattenerVerifier(embark);
+  function createVerifier() {
+    return new FlattenerVerifier({
+      optimize: embark.config.embarkConfig.options.solc.optimize,
+      optimizeRuns: embark.config.embarkConfig.options.solc['optimize-runs'],
+      contractsFiles: embark.config.contractsFiles,
+      solcVersion: embark.config.embarkConfig.versions.solc,
+      getWeb3DeployObject: (contract, cb) => {
+        embark.events.request('deploy:contract:object', contract, cb);
+      },
+      getAllContracts: (cb) => {
+        embark.events.request('contracts:all', cb);
+      },
+      getContractByName: (contractName, cb) => {
+        embark.events.request("contracts:contract", contractName, (contract) => {
+          cb(null, contract);
+        });
+      },
+      getNetworkId: (cb) => {
+        embark.events.request("blockchain:networkId", (networkId) => {
+          cb(null, networkId);
+        });
+      }
+    });
+  }
 
-  embark.registerConsoleCommand({
+    embark.registerConsoleCommand({
     description: "Flattens all or some of your contracts so that they can be verified on Etherscan\n\t\tYou can specify which contract to flatten by using their contract name. For multiple contracts, separate them using a comma",
     matches: (cmd) => {
       const [commandName] = cmd.split(' ');
@@ -21,8 +44,7 @@ module.exports = (embark) => {
         embark.logger.info('Flattening all contracts');
       }
 
-
-      flattenerVerifier.flatten(contractNames, callback);
+      createVerifier().flatten(contractNames, callback);
     }
   });
 
@@ -47,7 +69,7 @@ module.exports = (embark) => {
         return callback(null, 'solc version not present in embarkjs.json. Please add it to versions.solc'.red);
       }
 
-      flattenerVerifier.verify(apiKey, contractName, callback);
+      createVerifier().verify(apiKey, contractName, callback);
     }
   });
 };
